@@ -1,7 +1,10 @@
 
 # Ballerina Blogger Endpoint
+
  ![](https://upload.wikimedia.org/wikipedia/be-x-old/c/c2/Blogger_logo_transparent.png)
+ 
 [![Build Status](https://travis-ci.org/wso2-ballerina/package-googlespreadsheet.svg?branch=master)](https://travis-ci.org/wso2-ballerina/package-googlespreadsheet)
+
 Blogger is a blog-publishing service that allows multi-user blogs with time-stamped entries.The [Ballerina](http://ballerina.io) Blogger Endpoint enables you to integrate Blogger content with your application using the REST API.
 
 The following sections provide you with information on how to use the Ballerina Blogger endpoint.
