@@ -34,7 +34,7 @@ Your application must use [OAuth 2.0](https://developers.google.com/identity/pro
 [OAuth 2.0 playground](https://developers.google.com/oauthplayground) to receive the authorization code and obtain the 
 access token and refresh token). 
 5. Click **Create**. Your client ID and client secret appear. 
-6. In a separate browser window or tab, visit [OAuth 2.0 playground](https://developers.google.com/oauthplayground), select the required Google Spreadsheet scopes, and then click **Authorize APIs**.
+6. In a separate browser window or tab, visit [OAuth 2.0 playground](https://developers.google.com/oauthplayground), select the required Google Blogger scopes, and then click **Authorize APIs**.
 7. When you receive your authorization code, click **Exchange authorization code for tokens** to obtain the refresh token and access token. 
 
 ### Prerequisites
