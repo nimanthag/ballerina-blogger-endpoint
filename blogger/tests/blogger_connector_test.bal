@@ -139,17 +139,39 @@ function testdeletePostInABlog() {
  }
 
 @test:Config
-function testgetCommentListByBlogId() {
+function testgetCommentList() {
     io:println("\n ---------------------------------Test------------------------------------------");
-    log:printInfo("bloggerClient->getCommentListByBlogId()");
+    log:printInfo("bloggerClient->getCommentList");
 
-    var details = bloggerClient->getCommentListByBlogId("3439810468266050136","98644116980803936");
+    var details = bloggerClient->getCommentList("3439810468266050136","98644116980803936");
     match details {
         CommentList commentList => io:println(commentList);
         BloggerError bloggerError => test:assertFail(msg = bloggerError.message);
     }
 }
 
+@test:Config
+function testgetPage() {
+    io:println("\n ---------------------------------Test------------------------------------------");
+    log:printInfo("bloggerClient->getPage");
+
+    var details = bloggerClient->getPage("3439810468266050136","8543042551506282311");
+    match details {
+        Page page => io:println(page);
+        BloggerError bloggerError => test:assertFail(msg = bloggerError.message);
+    }
+}
+@test:Config
+function testgetPageList() {
+    io:println("\n ---------------------------------Test------------------------------------------");
+    log:printInfo("bloggerClient->getPageList");
+
+    var details = bloggerClient->getPageList("3439810468266050136");
+    match details {
+        PageList pageList => io:println(pageList);
+        BloggerError bloggerError => test:assertFail(msg = bloggerError.message);
+    }
+}
 
 
 

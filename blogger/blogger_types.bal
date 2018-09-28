@@ -148,25 +148,43 @@ public type CommentList object{
     Comment[] items;
 };
 
-//{
-//"kind": "blogger#comment",
-//"id": "9200761938824362519",
-//"post": {
-//"id": "6069922188027612413"
-//},
+public type Page object{
+    string kind;
+    string id;
+    Blog blog;
+    string published;
+    string updated;
+    string etag;
+    string url;
+    string selfLink;
+    string title;
+    string content;
+    Author author;
+};
+
+public type PageList object{
+    string kind;
+    Page[] items;
+};
+//
+//"kind": "blogger#page",
+//"id": "5683905445280330365",
 //"blog": {
-//"id": "2399953"
+//"id": "3439810468266050136"
 //},
-//"published": "2011-07-28T19:19:57.740Z",
-//"updated": "2011-07-28T21:29:42.015Z",
-//"selfLink": "https://www.googleapis.com/blogger/v3/blogs/2399953/posts/6069922188027612413/comments/9200761938824362519",
-//"content": "elided",
+//"published": "2018-09-28T12:21:00-07:00",
+//"updated": "2018-09-28T12:21:34-07:00",
+//"etag": "\"iHf3yWDE_geBgZ8U7rgZ_xuTeAQ/dGltZXN0YW1wOiAxNTM4MTYyNDk0NTcxCm9mZnNldDogLTI1MjAwMDAwCg\"",
+//"url": "http://kaduruwane.blogspot.com/p/my-first-page.html",
+//"selfLink": "https://www.googleapis.com/blogger/v3/blogs/3439810468266050136/pages/5683905445280330365",
+//"title": "My first page",
+//"content": "Hello guys. How are u",
 //"author": {
-//"id": "530579030283",
-//"displayName": "elided",
-//"url": "elided",
+//"id": "15546761305435177853",
+//"displayName": "Jinadasa",
+//"url": "https://www.blogger.com/profile/15546761305435177853",
 //"image": {
-//"url": "elided"
+//"url": "//lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=s35"
 //}
 //}
 //}

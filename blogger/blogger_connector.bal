@@ -88,7 +88,11 @@ public type BloggerConnector object {
     // Need to write description in new format
     function getComment(string blogId, string postId, string commentId) returns Comment|BloggerError;
 
-    function getCommentListByBlogId(string blogId, string postId) returns CommentList|BloggerError;
+    function getCommentList(string blogId, string postId) returns CommentList|BloggerError;
+
+    function getPage(string blogId, string pageId) returns Page|BloggerError;
+
+    function getPageList(string blogId) returns PageList|BloggerError;
 
     function getJasonObject (string url) returns json|BloggerError;
 
@@ -349,12 +353,40 @@ function BloggerConnector::getComment(string blogId, string postId, string comme
 
 }
 
-function BloggerConnector::getCommentListByBlogId(string blogId, string postId) returns CommentList|BloggerError{
+function BloggerConnector::getCommentList(string blogId, string postId) returns CommentList|BloggerError{
     CommentList bloggerResponse;
     var response = self.getJasonObject(BLOGS+blogId+BLOG_POST+postId+COMMENT);
     match response {
         json jasonResponse=> {
             bloggerResponse = convertToCommentList(jasonResponse);
+            return bloggerResponse;
+        }
+        BloggerError blogerr=>{
+            return blogerr;
+        }
+    }
+}
+
+function BloggerConnector::getPage(string blogId, string pageId) returns Page|BloggerError{
+    Page bloggerResponse;
+    var response = self.getJasonObject(BLOGS+blogId+PAGES+pageId);
+    match response {
+        json jasonResponse=> {
+            bloggerResponse = convertToPage(jasonResponse);
+            return bloggerResponse;
+        }
+        BloggerError blogerr=>{
+            return blogerr;
+        }
+    }
+}
+
+function BloggerConnector::getPageList(string blogId) returns PageList|BloggerError{
+    PageList bloggerResponse;
+    var response = self.getJasonObject(BLOGS+blogId+PAGES);
+    match response {
+        json jasonResponse=> {
+            bloggerResponse = convertToPageList(jasonResponse);
             return bloggerResponse;
         }
         BloggerError blogerr=>{

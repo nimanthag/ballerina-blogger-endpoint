@@ -24,7 +24,7 @@
 @final string BY_PATH = "bypath";
 @final string SEARCH = "search";
 @final string COMMENT = "/comments/";
-@final string PAGES = "pages";
+@final string PAGES = "/pages/";
 @final string ME = "self/";
 @final string REFRESH_URL = "https://www.googleapis.com/oauth2/v3/token";
 

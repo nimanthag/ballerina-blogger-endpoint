@@ -80,3 +80,15 @@ function convertToCommentList(json jsonDatas) returns CommentList {
     CommentList data = check <CommentList>jsonDatas;
     return data;
 }
+
+function convertToPage(json jsonDatas) returns Page {
+
+    Page data = check <Page>jsonDatas;
+    return data;
+}
+
+function convertToPageList(json jsonDatas) returns PageList {
+
+    PageList data = check <PageList>jsonDatas;
+    return data;
+}
