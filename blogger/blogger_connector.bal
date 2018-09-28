@@ -71,8 +71,99 @@ public type BloggerConnector object {
     }
     function getPostByBlogIdAndPostId(string blogId, string postId) returns Post|BloggerError;
 
+    documentation {Add a post to a blog
+    P{{blogId }} - A unique identifier for the blog
+    P{{post }} - A post object which need to publish
+    R{{}} - Post object on success and BloggerError on failure
+    }
+    function addPostToBlog(string blogId, Post post) returns Post|BloggerError;
+
+    documentation { Delete a post in a blog
+    P{{blogId }} - A unique identifier of the blog
+    P{{postId }} - A unique identifier of the post
+    R{{}} - boolean on success and BloggerError on failure
+    }
+    function deletePostInABlog(string blogId, string postId) returns boolean|BloggerError;
+
+    // Need to write description in new format
+    function getComment(string blogId, string postId, string commentId) returns Comment|BloggerError;
+
+    function getCommentListByBlogId(string blogId, string postId) returns CommentList|BloggerError;
+
     function getJasonObject (string url) returns json|BloggerError;
+
+    function postJasonObject(string url, json payload) returns json|BloggerError;
+
+    function deleteObject(string url) returns boolean|BloggerError;
 };
+function BloggerConnector::deleteObject(string url) returns boolean|BloggerError{
+    endpoint http:Client httpClient = self.httpClient;
+    BloggerError bloggerError = new;
+    http:Request request = new;
+    var httpResponse = httpClient->delete(url,request);
+    match httpResponse {
+        error err => {
+            bloggerError.message = err.message;
+            bloggerError.cause = err.cause;
+            log:printError(bloggerError.message, err = ());
+            return bloggerError;
+        }
+        http:Response response => {
+
+            int statusCode = response.statusCode;
+
+            if (statusCode == http:NO_CONTENT_204) {
+                return true;
+            } else {
+                bloggerError.message = "Deletion fail";
+                bloggerError.statusCode = statusCode;
+                log:printError(bloggerError.message, err = ());
+                return bloggerError;
+            }
+        }
+    }
+}
+function BloggerConnector::postJasonObject (string url, json payload) returns json|BloggerError {
+    endpoint http:Client httpClient = self.httpClient;
+    BloggerError bloggerError = new;
+    http:Request request = new;
+    request.setJsonPayload(payload);
+    io:println(request);
+    io:println("url :"+url);
+    //io:println(httpClient);
+    var httpResponse = httpClient->post(url, request );
+    match httpResponse {
+        error err => {
+            bloggerError.message = err.message;
+            bloggerError.cause = err.cause;
+            log:printError(bloggerError.message, err = ());
+            return bloggerError;
+        }
+        http:Response response => {
+    
+            int statusCode = response.statusCode;
+            var bloggerJSONResponse = response.getJsonPayload();
+            match bloggerJSONResponse {
+                error err => {
+                    bloggerError.message = "Error occured while extracting Json Payload";
+                    bloggerError.cause = err.cause;
+                    log:printError(bloggerError.message, err = ());
+                    return bloggerError;
+                }
+                json jsonResponse => {
+                    if (statusCode == http:OK_200) {
+                        return jsonResponse;
+                    } else {
+                        bloggerError.message = jsonResponse["errors"].toString();
+                        bloggerError.statusCode = statusCode;
+                        log:printError(bloggerError.message, err = ());
+                        return bloggerError;
+                    }
+                }
+            }
+        }
+    }  
+}
 
 function BloggerConnector::getJasonObject (string url) returns json|BloggerError {
       endpoint http:Client httpClient = self.httpClient;
@@ -158,7 +249,7 @@ function BloggerConnector::getBlogById(string blogId) returns BlogData|BloggerEr
 function BloggerConnector::getBlogByUrl(string blogUrl) returns BlogData|BloggerError{
     BlogData bloggerResponse;
     io:println(BLOGS+BY_URL+blogUrl);
-    var response = self.getJasonObject("blogs/byurl?url="+blogUrl);
+    var response = self.getJasonObject("/blogs/byurl?url="+blogUrl);
     match response {
         json jasonResponse=> {
             bloggerResponse = convertToBlogData(jasonResponse);
@@ -205,6 +296,65 @@ function BloggerConnector::getPostByBlogIdAndPostId(string blogId, string postId
     match response {
         json jasonResponse=> {
             bloggerResponse = convertToPost(jasonResponse);
+            return bloggerResponse;
+        }
+        BloggerError blogerr=>{
+            return blogerr;
+        }
+    }
+}
+function BloggerConnector::addPostToBlog(string blogId, Post post) returns Post|BloggerError {
+    json payload = convertPostToJason(post);
+    io:println(payload);
+    string url = BLOGS+blogId+BLOG_POST;
+    var response = self.postJasonObject(url, payload);
+    Post bloggerResponsePost;
+    match response {
+        json  bloggerResponse=>{
+            bloggerResponsePost= convertToPost(bloggerResponse);
+            return bloggerResponsePost;
+        }
+        BloggerError blogerr=>{
+            return blogerr;
+        }
+    }
+
+}
+function BloggerConnector::deletePostInABlog(string blogId, string postId) returns boolean|BloggerError{
+    string url = BLOGS+blogId+BLOG_POST+postId;
+    match self.deleteObject(url) {
+        boolean value => {
+            log:printDebug("Deleting success");
+            return value;
+        }
+        BloggerError err =>{
+            return err;
+        }
+
+    }
+}
+
+function BloggerConnector::getComment(string blogId, string postId, string commentId) returns Comment|BloggerError{
+    Comment bloggerResponse;
+    var response = self.getJasonObject(BLOGS+blogId+BLOG_POST+postId+COMMENT+commentId);
+    match response {
+        json jasonResponse=> {
+            bloggerResponse = convertToComment(jasonResponse);
+            return bloggerResponse;
+        }
+        BloggerError blogerr=>{
+            return blogerr;
+        }
+    }
+
+}
+
+function BloggerConnector::getCommentListByBlogId(string blogId, string postId) returns CommentList|BloggerError{
+    CommentList bloggerResponse;
+    var response = self.getJasonObject(BLOGS+blogId+BLOG_POST+postId+COMMENT);
+    match response {
+        json jasonResponse=> {
+            bloggerResponse = convertToCommentList(jasonResponse);
             return bloggerResponse;
         }
         BloggerError blogerr=>{

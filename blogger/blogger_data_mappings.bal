@@ -62,3 +62,21 @@ function convertToPost(json jsonDatas) returns Post {
     Post data = check <Post>jsonDatas;
     return data;
 }
+
+function convertPostToJason(Post postData) returns json {
+
+    json data = check <json>postData;
+    return data;
+}
+
+function convertToComment(json jsonDatas) returns Comment {
+
+    Comment data = check <Comment>jsonDatas;
+    return data;
+}
+
+function convertToCommentList(json jsonDatas) returns CommentList {
+
+    CommentList data = check <CommentList>jsonDatas;
+    return data;
+}

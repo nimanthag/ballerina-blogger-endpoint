@@ -16,7 +16,6 @@
 // under the License.
 //
 
-//Medium API endpoint
 @final string BASE_URL = "https://www.googleapis.com/blogger/v3/"; 
 @final string USERS_PATH = "/users/";
 @final string BLOGS = "/blogs/";
@@ -24,7 +23,7 @@
 @final string BLOG_POST = "/posts/";
 @final string BY_PATH = "bypath";
 @final string SEARCH = "search";
-@final string COMMENT = "comments";
+@final string COMMENT = "/comments/";
 @final string PAGES = "pages";
 @final string ME = "self/";
 @final string REFRESH_URL = "https://www.googleapis.com/oauth2/v3/token";

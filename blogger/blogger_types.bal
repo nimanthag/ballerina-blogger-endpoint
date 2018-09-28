@@ -90,6 +90,10 @@ public type Blog record{
     string id;
 };
 
+public type PostID record{
+    string id;
+};
+
 public type Author record{
     string id;
     string displayname;
@@ -125,3 +129,44 @@ public type PostList object{
     Post[] items;
 } ;
 
+public type Comment object {
+    string kind;
+    string id;
+    PostID post;
+    Blog blog;
+    string published;
+    string updated;
+    string selfLink;
+    string content;
+    Author author;
+};
+
+public type CommentList object{
+    string kind;
+    string nextPageToken;
+    string prevPageToken;
+    Comment[] items;
+};
+
+//{
+//"kind": "blogger#comment",
+//"id": "9200761938824362519",
+//"post": {
+//"id": "6069922188027612413"
+//},
+//"blog": {
+//"id": "2399953"
+//},
+//"published": "2011-07-28T19:19:57.740Z",
+//"updated": "2011-07-28T21:29:42.015Z",
+//"selfLink": "https://www.googleapis.com/blogger/v3/blogs/2399953/posts/6069922188027612413/comments/9200761938824362519",
+//"content": "elided",
+//"author": {
+//"id": "530579030283",
+//"displayName": "elided",
+//"url": "elided",
+//"image": {
+//"url": "elided"
+//}
+//}
+//}
