@@ -17,32 +17,31 @@
 import ballerina/http;
 import ballerina/config;
 
-documentation {BloggerConfiguration is used to set up the Blogger configuration. In order to use
-this connector, you need to provide the oauth2 credentials.
-    F{{clientConfig}} - The HTTP client congiguration
-}
+
+# BloggerConfiguration is used to set up the Blogger configuration. In order to use
+# this connector, you need to provide the oauth2 credentials.
+# + clientConfig - The HTTP client congiguration
+
 public type BloggerConfiguration record{
     http:ClientEndpointConfig clientConfig = {};
 };
 
-// documentation {Blogger Endpoint object.
-//     E{{}} -
-//     F{{bloggerConfig}} - Blogger client endpoint configuration object
-//     F{{bloggerConnector}} - Blogger connector object
-// }
+# Blogger Endpoint object.
+# + bloggerConfigs - Blogger client endpoint configuration object
+# + bloggerConnector - Blogger connector object
 public type Client object {
 
-       public BloggerConfiguration bloggerConfigs = {};
-       public BloggerConnector bloggerConnector = new;
+    public BloggerConfiguration bloggerConfigs = {};
+    public BloggerConnector bloggerConnector = new;
 
-    documentation {Blogger endpoint initialization function
-        P{{bloggerConfig}} - Blogger client endpoint configuration object
-    }
+    # Blogger endpoint initialization function.
+    # + bloggerConfig - Blogger client endpoint configuration object
+
     public function init(BloggerConfiguration bloggerConfig);
 
-    documentation {Get Blogger connector client
-        R{{}} - Blogger connector client
-    }
+
+    # Get Blogger connector client.
+    # + return - Blogger connector client
     public function getCallerActions() returns BloggerConnector;
 };
 

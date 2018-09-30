@@ -26,7 +26,7 @@ The `nimanthag/blogger` package contains operations to retrieve user information
 ## Compatibility
 |                    |    Version     |
 |:------------------:|:--------------:|
-| Ballerina Language | 0.980.0 ,0.981.1       |
+| Ballerina Language |  0.982.0       |
 | Blogger API Version          | v3             |
 
 ## Prerequisites

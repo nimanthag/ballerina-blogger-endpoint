@@ -19,7 +19,7 @@ The following sections provide you with information on how to use the Ballerina 
 
 | Ballerina Language Version  | Blogger API Version |
 |:---------------------------:|:------------------------------:|
-|  0.980.0 ,0.981.1                   |   V3                           |
+|  0.982.0                   |   V3                           |
 ### Authorizing requests and identifying your application
 Every request your application sends to the Blogger APIs needs to identify your application to Google. 
 #### About authorization protocols

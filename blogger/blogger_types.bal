@@ -14,29 +14,90 @@
 // specific language governing permissions and limitations
 // under the License.
 
-documentation { record to define Locale
-    F{{language}} language of the Blogger
-    F{{country}} country of the Blogger
-    F{{variant}} variant of the Blogger
-}
+
+#Struct to define Locale.
+# + language - language of the Blogger
+# + country - country of the Blogger
+# + variant - variant of the Blogger
+
 type Locale record {
-    string language,
-    string country,
-    string variant,
+    string language;
+    string country;
+    string variant;
 };
+
+# Struct to define Blogs.
+# + selfLink - self link
 
 type Blogs record{
     string selfLink;
 };
-documentation {Struct to define the Profile Data
-    F{{id}} A unique identifier for the Blogger
-    F{{kind}} The user’s kind on Blogger
-    F{{displayName}} The user’s name on Blogger
-    F{{url}} The URL to the user’s profile on Blogger
-    F{{selfLink}} The user's Self Link on Blogger
-    F{{locale}} record contains language country and variant
-    F{{blogs}} record contains Blogs selfLink
-}
+
+# Struct to define Posts.
+# + totalItems - No of posts
+# + selfLink - self link
+public type Posts record{
+string totalItems;
+string selfLink;
+};
+
+# Struct to define Pages.
+# + totalItems - No of pages
+# + selfLink - self link
+public type Pages record{
+string totalItems;
+string selfLink;
+};
+
+# Struct to define Blog.
+# + id - Unique identifier
+public type Blog record{
+string id;
+};
+
+
+# Struct to define PostID.
+# + id - Unique identifier
+public type PostID record{
+string id;
+};
+
+# Struct to define Image.
+# + url - image url
+public type Image record{
+string url;
+};
+
+# Struct to define Replies.
+# + totalItems - no of replies
+# + selfLink - self link
+public type Replies record{
+string totalItems;
+string selfLink;
+};
+
+
+# Struct to define Author.
+# + id - Unique identifier of author
+# + displayname - Display name of author
+# + url - url of the author
+# + image - Image object
+public type Author record{
+string id;
+string displayname;
+string url;
+Image image;
+};
+
+# Struct to define ProfileData.
+# + kind - The user’s kind on Blogger
+# + id - A unique identifier for the Blogger
+# + url - The URL to the user’s profile on Blogger
+# + selfLink - self link
+# + blogs - refers to Blogs
+# + displayName - The user’s name on Blogger
+# + locale - contains locale
+
 public type ProfileData object{
     string kind;
     string id;
@@ -48,14 +109,19 @@ public type ProfileData object{
     
 
 };
-public type Posts record{
-    string totalItems;
-    string selfLink;
-};
-public type Pages record{
-    string totalItems;
-    string selfLink;
-};
+
+# Struct to define BlogData.
+# + kind - kind
+# + id - A unique identifier for the blog
+# + name - Name
+# + description - Description of the blog
+# + published - publish date
+# + updated - update date
+# + url - The URL to the blog
+# + selfLink - self link
+# + posts - Posts object
+# + pages - Pages object
+# + locale - contains locale
 public type BlogData object{
     string kind;
     string id;
@@ -70,65 +136,63 @@ public type BlogData object{
     Locale locale;
 };
 
-documentation {Struct to define the error
-    F{{message}} - Error message of the response
-    F{{cause}} - The error which caused the Blogger error
-    F{{statusCode}} - The status code
-}
-public type BloggerError object{
-    string message;
-    error? cause;
-    int statusCode;
-};
-
+# Struct to define BlogList.
+# + kind - kind
+# + items - list of BlogData objects
 public type BlogList object {
-    string kind;
-    BlogData[] items;
+string kind;
+BlogData[] items;
 };
 
-public type Blog record{
-    string id;
-};
 
-public type PostID record{
-    string id;
-};
-
-public type Author record{
-    string id;
-    string displayname;
-    string url;
-    Image image;
-};
-
-public type Image record{
-    string url;
-};
-
-public type Replies record{
-    string totalItems;
-    string selfLink;
-};
+# Struct to define Post.
+# + kind - kind
+# + id - A unique identifier for the post
+# + blog - Blog object
+# + published - publish date
+# + updated - update date
+# + url - The URL to the blog
+# + selfLink - self link
+# + title - Title of the post
+# + content - Content in the post
+# + author - Author of the post
+# + replies - Replies object
 public type Post object{
-    string kind;
-    string id;
-    Blog blog;
-    string published;
-    string updated;
-    string url;
-    string selfLink;
-    string title;
-    string content;
-    Author author;
-    Replies replies;
+string kind;
+string id;
+Blog blog;
+string published;
+string updated;
+string url;
+string selfLink;
+string title;
+string content;
+Author author;
+Replies replies;
 };
+
+# Struct to define PostList.
+# + kind - kind
+# + nextPageToken - Token for the next page
+# + prevPageToken - Token for the previous page
+# + items - List of Posts
 public type PostList object{
-    string kind;
-    string nextPageToken;
-    string prevPageToken;
-    Post[] items;
+string kind;
+string nextPageToken;
+string prevPageToken;
+Post[] items;
 } ;
 
+# Struct to define Comment.
+# + kind - kind
+# + id - A unique identifier for the comment
+# + post - PostID object
+# + blog - Blog object
+# + published - publish date
+# + updated - update date
+# + selfLink - self link
+# + content - Content in the post
+# + author - Author of the post
 public type Comment object {
     string kind;
     string id;
@@ -141,6 +205,11 @@ public type Comment object {
     Author author;
 };
 
+# Struct to define CommentList.
+# + kind - kind
+# + nextPageToken - Token for the next page
+# + prevPageToken - Token for the previous page
+# + items - List of Comments
 public type CommentList object{
     string kind;
     string nextPageToken;
@@ -148,6 +217,18 @@ public type CommentList object{
     Comment[] items;
 };
 
+# Struct to define Page.
+# + kind - kind
+# + id - A unique identifier for the Page
+# + blog - Blog object
+# + published - publish date
+# + updated - update date
+# + etag - Electronic Tag
+# + url - The URL to the page
+# + selfLink - self link
+# + title - Title of the post
+# + content - Content in the post
+# + author - Author of the post
 public type Page object{
     string kind;
     string id;
@@ -162,29 +243,20 @@ public type Page object{
     Author author;
 };
 
+# Struct to define PageList.
+# + kind - kind
+# + items - List of Pages
 public type PageList object{
     string kind;
     Page[] items;
 };
-//
-//"kind": "blogger#page",
-//"id": "5683905445280330365",
-//"blog": {
-//"id": "3439810468266050136"
-//},
-//"published": "2018-09-28T12:21:00-07:00",
-//"updated": "2018-09-28T12:21:34-07:00",
-//"etag": "\"iHf3yWDE_geBgZ8U7rgZ_xuTeAQ/dGltZXN0YW1wOiAxNTM4MTYyNDk0NTcxCm9mZnNldDogLTI1MjAwMDAwCg\"",
-//"url": "http://kaduruwane.blogspot.com/p/my-first-page.html",
-//"selfLink": "https://www.googleapis.com/blogger/v3/blogs/3439810468266050136/pages/5683905445280330365",
-//"title": "My first page",
-//"content": "Hello guys. How are u",
-//"author": {
-//"id": "15546761305435177853",
-//"displayName": "Jinadasa",
-//"url": "https://www.blogger.com/profile/15546761305435177853",
-//"image": {
-//"url": "//lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=s35"
-//}
-//}
-//}
+
+# Struct to define the error.
+# + message - Error message of the response
+# + cause - The error which caused the Blogger error
+# + statusCode - The status code
+public type BloggerError object{
+string message;
+error? cause;
+int statusCode;
+};

@@ -21,84 +21,89 @@ import ballerina/config;
 import ballerina/log;
 
 
-documentation {Blogger client connector
-    F{{httpClient}} - The HTTP Client
-}
-public type BloggerConnector object {
-    //public {
-        public http:Client httpClient = new;
-   // }
+# Blogger Client Connector.
+# + httpClient - The HTTP Client
 
-    documentation {Get Profile Information
-        R{{}} - ProfileData object on success and BloggerError on failure
-    }
+public type BloggerConnector object {
+
+    public http:Client httpClient = new;
+
+    # Get Profile Information.
+    # + return - ProfileData object on success and BloggerError on failure
     function getProfileInfo() returns ProfileData|BloggerError;
 
-    documentation {Get Profile Information of a user
-        P{{userId}} - A unique identifier for the user
-        R{{}} - ProfileData object on success and BloggerError on failure
-    }
+    # Get Profile Information of a user.
+    # + userId - A unique identifier for the user
+    # + return - ProfileData object on success and BloggerError on failure
     function getProfileInfoOfUser(string userId) returns ProfileData|BloggerError;
 
-    documentation {Get Blog Information from unique Id
-    P{{blogId}} - A unique identifier for the blog
-    R{{}} - BlogData object on success and BloggerError on failure
-    }
+    # Get Blog Information from unique Id.
+    # + blogId - A unique identifier for the blog
+    # + return - BlogData object on success and BloggerError on failure
     function getBlogById(string blogId) returns BlogData|BloggerError;
 
-    documentation {Get Blog Information from url
-    P{{blogUrl}} - A unique Url for the blog
-    R{{}} - BlogData object on success and BloggerError on failure
-    }
+    # Get Blog Information from url.
+    # + blogUrl - A unique Url for the blog
+    # + return - BlogData object on success and BloggerError on failure
     function getBlogByUrl(string blogUrl) returns BlogData|BloggerError;
 
-    documentation {Get BlogList of a user
-    P{{userId}} - A unique identifier for the user
-    R{{}} - BlogList object on success and BloggerError on failure
-    }
+    # Get BlogList of a user.
+    # + userId - A unique identifier for the user
+    # + return - BlogList object on success and BloggerError on failure
     function getBlogListByUserId(string userId) returns BlogList|BloggerError;
 
-    documentation {Get PostList of a blog
-    P{{blogId}} - A unique identifier for the blog
-    R{{}} - PostList object on success and BloggerError on failure
-    }
+    # Get PostList of a blog.
+    # + blogId - A unique identifier for the blog
+    # + return - PostList object on success and BloggerError on failure
     function getPostListByBlogId(string blogId) returns PostList|BloggerError;
 
-    documentation {Get Post of a blog using blog id and post id
-    P{{blogId }} - A unique identifier for the blog
-    P{{postId}} - A uniqhue identifier for the post in a blog
-    R{{}} - PostList object on success and BloggerError on failure
-    }
+    # Get Post of a blog using blog id and post id.
+    # + blogId - A unique identifier for the blog
+    # + postId - A uniqhue identifier for the post in a blog
+    # + return - Post object on success and BloggerError on failure
     function getPostByBlogIdAndPostId(string blogId, string postId) returns Post|BloggerError;
 
-    documentation {Add a post to a blog
-    P{{blogId }} - A unique identifier for the blog
-    P{{post }} - A post object which need to publish
-    R{{}} - Post object on success and BloggerError on failure
-    }
+    # Add a post to a blog.
+    # + blogId - A unique identifier for the blog
+    # + post - A post object which need to publish
+    # + return - Post object on success and BloggerError on failure
     function addPostToBlog(string blogId, Post post) returns Post|BloggerError;
 
-    documentation { Delete a post in a blog
-    P{{blogId }} - A unique identifier of the blog
-    P{{postId }} - A unique identifier of the post
-    R{{}} - boolean on success and BloggerError on failure
-    }
+    # Delete a post in a blog.
+    # + blogId - A unique identifier for the blog
+    # + postId - A unique identifier for the post
+    # + return - boolean on success and BloggerError on failure
     function deletePostInABlog(string blogId, string postId) returns boolean|BloggerError;
 
-    // Need to write description in new format
-    function getComment(string blogId, string postId, string commentId) returns Comment|BloggerError;
-
+    # Get CommentList of a post.
+    # + blogId - A unique identifier for the blog
+    # + postId - A unique identifier for the post
+    # + return - CommentList object on success and BloggerError on failure
     function getCommentList(string blogId, string postId) returns CommentList|BloggerError;
 
-    function getPage(string blogId, string pageId) returns Page|BloggerError;
+    # Get Comment of a post.
+    # + blogId - A unique identifier for the blog
+    # + postId - A unique identifier for the post
+    # + commentId - A unique identifier for the commenrt
+    # + return - CommentList object on success and BloggerError on failure
+    function getComment(string blogId, string postId, string commentId) returns Comment|BloggerError;
 
+    # Get PageList of a blog.
+    # + blogId - A unique identifier for the blog
+    # + return - PageList object on success and BloggerError on failure
     function getPageList(string blogId) returns PageList|BloggerError;
 
-    function getJasonObject (string url) returns json|BloggerError;
+    # Get Page of a post.
+    # + blogId - A unique identifier for the blog
+    # + pageId - A unique identifier for the page
+    # + return - Page object on success and BloggerError on failure
+    function getPage(string blogId, string pageId) returns Page|BloggerError;
 
-    function postJasonObject(string url, json payload) returns json|BloggerError;
+    private function getJasonObject (string url) returns json|BloggerError;
 
-    function deleteObject(string url) returns boolean|BloggerError;
+    private function postJasonObject(string url, json payload) returns json|BloggerError;
+
+    private function deleteObject(string url) returns boolean|BloggerError;
 };
 function BloggerConnector::deleteObject(string url) returns boolean|BloggerError{
     endpoint http:Client httpClient = self.httpClient;
@@ -134,7 +139,6 @@ function BloggerConnector::postJasonObject (string url, json payload) returns js
     request.setJsonPayload(payload);
     io:println(request);
     io:println("url :"+url);
-    //io:println(httpClient);
     var httpResponse = httpClient->post(url, request );
     match httpResponse {
         error err => {
