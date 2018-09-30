@@ -33,7 +33,7 @@ endpoint Client bloggerClient {
 
      var details = bloggerClient->getProfileInfoOfUser("15546761305435177853");
      match details {
-        ProfileData account => io:println(account);//.id
+        ProfileData account => io:println(account);
         BloggerError bloggerError => test:assertFail(msg = bloggerError.message);
      }
  }
