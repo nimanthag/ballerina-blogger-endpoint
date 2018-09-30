@@ -161,7 +161,7 @@ You can retrieve a specific post by
         BloggerError bloggerError => test:assertFail(msg = bloggerError.message);
      }
 ```
-### Delete
+#### Delete
 ##### by blog id and post id
 You can delete a post in a blog by
 ```ballerina
