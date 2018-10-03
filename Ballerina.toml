@@ -1,4 +1,6 @@
 [project]
-org-name = "nimantha"
+org-name = "nimanthag"
 version = "0.0.1"
+repository = "https://github.com/nimanthag/ballerina-blogger-endpoint"
+keywords = ["blogger"]
 
